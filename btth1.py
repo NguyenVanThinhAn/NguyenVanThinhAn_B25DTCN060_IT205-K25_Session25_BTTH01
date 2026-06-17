@@ -108,16 +108,18 @@ while True:
             else:
                 current_account = None
 
-        case "2" | "3" | "4":
+        case "2":
             if current_account is None:
                 print("Hệ thống chưa có thông tin tài khoản")
                 print("Vui lòng mở tài khoản ở Chức năng 1 trước.")
-                continue
-                
-            if select == "2":
+            else:
                 current_account.display_info()
-                
-            elif select == "3":
+
+        case "3":
+            if current_account is None:
+                print("Hệ thống chưa có thông tin tài khoản")
+                print("Vui lòng mở tài khoản ở Chức năng 1 trước.")
+            else:
                 print("--- GIAO DỊCH NẠP / RÚT TIỀN ---")
                 print("1. Nạp tiền")
                 print("2. Rút tiền")
@@ -125,20 +127,22 @@ while True:
                 
                 try:
                     amount_in = float(input("Nhập số tiền giao dịch: "))
+                    if type_select == "1":
+                        current_account.deposit(amount_in)
+                    elif type_select == "2":
+                        current_account.withdraw(amount_in)
+                    else:
+                        print("Lựa chọn loại giao dịch không hợp lệ.")
+                        
+                    print(f"Số dư mới: {current_account.balance:,} VND")
                 except ValueError:
                     print("Số tiền nhập vào không hợp lệ!")
-                    continue
-                    
-                if type_select == "1":
-                    current_account.deposit(amount_in)
-                elif type_select == "2":
-                    current_account.withdraw(amount_in)
-                else:
-                    print("Lựa chọn loại giao dịch không hợp lệ.")
-                    
-                print(f"Số dư mới: {current_account.balance:,} VND")
                 
-            elif select == "4":
+        case "4":
+            if current_account is None:
+                print("Hệ thống chưa có thông tin tài khoản")
+                print("Vui lòng mở tài khoản ở Chức năng 1 trước.")
+            else:
                 print("--- CẬP NHẬT TÊN CHỦ TÀI KHOẢN ---")
                 new_name_in = input("Nhập tên mới: ")
                 old_name = current_account.account_name
